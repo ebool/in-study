@@ -1,14 +1,13 @@
 <template>
-  <q-page class="flex flex-center">
-    <img alt="Quasar logo" src="~assets/quasar-logo-full.svg">
-  </q-page>
+  <div dir="index-cont">
+    <router-view></router-view>
+  </div>
 </template>
-
-<style>
-</style>
 
 <script>
 export default {
-  name: 'PageIndex'
 }
 </script>
+
+<style lang="scss" scoped>
+</style>

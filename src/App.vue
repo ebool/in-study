@@ -1,6 +1,6 @@
 <template>
-  <div id="q-app">
-    <router-view />
+  <div class="cont">
+    <router-view></router-view>
   </div>
 </template>
 
@@ -11,4 +11,12 @@ export default {
 </script>
 
 <style>
+  html, body {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+  }
+  body {
+    overflow: scroll;
+  }
 </style>
