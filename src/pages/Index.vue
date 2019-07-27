@@ -1,13 +1,13 @@
 <template>
-  <div dir="index-cont">
-    <router-view></router-view>
-  </div>
+  <router-view></router-view>
 </template>
 
 <script>
 export default {
+  components: {
+  }
 }
 </script>
 
-<style lang="scss" scoped>
+<style>
 </style>
