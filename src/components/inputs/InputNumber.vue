@@ -42,7 +42,6 @@ export default {
   },
   methods: {
     plus () {
-      console.log(this.number, this.unit, this.max);
       if (this.number + this.unit > this.max) return;
       this.number += this.unit;
     },
