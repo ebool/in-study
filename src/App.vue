@@ -18,4 +18,7 @@ export default {
   body {
     overflow: scroll;
   }
+  #q-app {
+    height: 100%;
+  }
 </style>
