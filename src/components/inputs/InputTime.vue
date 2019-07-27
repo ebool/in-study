@@ -84,10 +84,10 @@ export default {
 
 <style lang="scss" scoped>
 .input-time-cont {
+  user-select: none;
   .input-time {
     .icon {
       font-size: 54px;
-      user-select: none;
       cursor: pointer;
     }
     .time {
