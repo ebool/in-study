@@ -16,14 +16,12 @@ export default {
       type: Number
     },
     min: {
-      default: 0,
-      type: Number,
-      validator: (val) => val >= 0
+      default: '00:00',
+      type: String
     },
     max: {
-      default: 0,
-      type: Number,
-      validator: (val) => val >= 0
+      default: '03:00',
+      type: String
     },
     default: {
       default: '00:00',
@@ -58,22 +56,24 @@ export default {
   methods: {
     plus () {
       let res = this.addMinutes(this.time, this.unit);
-      let d = this.getDate(this.max);
+      let d = this.parseDate(this.max);
       if (res.getTime() >= d.getTime()) return;
       this.time = res;
     },
     minus () {
       let res = this.addMinutes(this.time, -this.unit);
-      let d = this.getDate(this.min, true);
+      let d = this.parseDate(this.min, true);
       if (res.getTime() <= d.getTime()) return;
       this.time = res;
     },
-    getDate (h, isSetSecond) {
-      let d = new Date();
-      d.setHours(h);
-      d.setMinutes(0);
-      if (isSetSecond) d.setSeconds(0);
-      return d;
+    parseDate (d, isSetSec) {
+      let h = d.split(':')[0] || 0;
+      let m = d.split(':')[1] || 0;
+      let res = new Date();
+      res.setHours(h);
+      res.setMinutes(m);
+      if (isSetSec)res.setSeconds(0);
+      return res;
     },
     addMinutes (date, min) {
       return new Date(date.getTime() + min * 60000);
@@ -88,6 +88,7 @@ export default {
     .icon {
       font-size: 54px;
       user-select: none;
+      cursor: pointer;
     }
     .time {
       font-size: 64px;

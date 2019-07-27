@@ -60,6 +60,7 @@ export default {
     .icon {
       font-size: 54px;
       user-select: none;
+      cursor: pointer;
     }
     .number {
       font-size: 64px;
