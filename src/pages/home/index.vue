@@ -27,7 +27,7 @@ export default {
   },
   methods: {
     goTo () {
-      this.$router.replace({ path: '/waiting' });
+      this.$router.push({ path: '/waiting' });
     }
   }
 }
