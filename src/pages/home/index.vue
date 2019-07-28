@@ -7,6 +7,7 @@
     <div class="q-mb-md">Set</div>
     <input-number :unit="1" :min="1" :max="10" :default="5"></input-number>
     <q-btn
+      @click="goTo"
       class="q-mt-lg"
       rounded
       style="background: #7A74E8; color: white"
@@ -23,6 +24,11 @@ export default {
   components: {
     InputTime,
     InputNumber
+  },
+  methods: {
+    goTo () {
+      this.$router.replace({ path: '/waiting' });
+    }
   }
 }
 </script>

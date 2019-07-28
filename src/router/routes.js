@@ -15,6 +15,14 @@ const routes = [
       {
         path: '/stats',
         component: () => import('pages/stats/')
+      },
+      {
+        path: '/waiting',
+        component: () => import('pages/waiting/')
+      },
+      {
+        path: '/timer',
+        component: () => import('pages/timer/')
       }
     ]
   }
