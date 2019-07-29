@@ -39,15 +39,21 @@ export default {
   },
   mounted () {
     this.number = this.default;
+    this.emitData();
   },
   methods: {
     plus () {
       if (this.number + this.unit > this.max) return;
       this.number += this.unit;
+      this.emitData();
     },
     minus () {
       if (this.number - this.unit < this.min) return;
       this.number -= this.unit;
+      this.emitData();
+    },
+    emitData () {
+      this.$emit('callback', this.number);
     }
   }
 }

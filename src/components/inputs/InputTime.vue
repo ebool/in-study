@@ -52,6 +52,7 @@ export default {
     let m = this.default.split(':')[1] || 0;
     this.time.setHours(h);
     this.time.setMinutes(m);
+    this.emitData();
   },
   methods: {
     plus () {
@@ -59,12 +60,17 @@ export default {
       let d = this.parseDate(this.max);
       if (res.getTime() >= d.getTime()) return;
       this.time = res;
+      this.emitData();
     },
     minus () {
       let res = this.addMinutes(this.time, -this.unit);
       let d = this.parseDate(this.min, true);
       if (res.getTime() <= d.getTime()) return;
       this.time = res;
+      this.emitData();
+    },
+    emitData () {
+      this.$emit('callback', `${this.time.getHours()}:${this.time.getMinutes()}`);
     },
     parseDate (d, isSetSec) {
       let h = d.split(':')[0] || 0;
