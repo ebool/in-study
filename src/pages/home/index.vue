@@ -12,7 +12,7 @@
       rounded
       style="background: #7A74E8; color: white"
       size="xl"
-      :label="sumOfTime | timeFormat"></q-btn>
+      :label="getSumOfTime"></q-btn>
   </div>
 </template>
 
@@ -33,6 +33,9 @@ export default {
     ...mapMutations('timer', ['setTrainingTime', 'setRestTime', 'setSetCnt'])
   },
   computed: {
+    getSumOfTime () {
+      return `총 ${Math.floor(this.sumOfTime / 60)}시간 ${this.sumOfTime % 60}분`
+    },
     ...mapGetters('timer', ['sumOfTime'])
   },
   mounted () {

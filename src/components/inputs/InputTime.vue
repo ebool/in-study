@@ -2,13 +2,15 @@
   <div class="input-time-cont">
     <div class="input-time row justify-center items-center">
       <q-icon class="icon q-mr-md" @click="minus" name="remove"/>
-      <div class="time">{{hh}}:{{mm}}</div>
+      <div class="time">{{time | timeFormat}}</div>
       <q-icon class="icon q-ml-md" @click="plus" name="add"/>
     </div>
   </div>
 </template>
 
 <script>
+import { parseTimeByMinutes } from 'utils/utils.js';
+
 export default {
   props: {
     unit: {
@@ -34,55 +36,28 @@ export default {
     }
   },
   computed: {
-    hh () {
-      if (!this.time) return 0;
-      return this.addZero(this.time.getHours());
-    },
-    mm () {
-      if (!this.time) return 0;
-      return this.addZero(this.time.getMinutes());
-    },
-    addZero () {
-      return (val) => val > 9 ? val : '0' + val;
-    }
   },
   mounted () {
-    this.time = new Date();
-    let h = this.initValue.split(':')[0] || 0;
-    let m = this.initValue.split(':')[1] || 0;
-    this.time.setHours(h);
-    this.time.setMinutes(m);
+    this.time = parseTimeByMinutes(this.initValue);
     this.emitData();
   },
   methods: {
     plus () {
-      let res = this.addMinutes(this.time, this.unit);
-      let d = this.parseDate(this.max);
-      if (res.getTime() >= d.getTime()) return;
+      let res = this.time + this.unit;
+      let max = parseTimeByMinutes(this.max);
+      if (res > max) return;
       this.time = res;
       this.emitData();
     },
     minus () {
-      let res = this.addMinutes(this.time, -this.unit);
-      let d = this.parseDate(this.min, true);
-      if (res.getTime() <= d.getTime()) return;
+      let res = this.time - this.unit;
+      let min = parseTimeByMinutes(this.min);
+      if (res < min) return;
       this.time = res;
       this.emitData();
     },
     emitData () {
-      this.$emit('callback', `${this.time.getHours()}:${this.time.getMinutes()}`);
-    },
-    parseDate (d, isSetSec) {
-      let h = d.split(':')[0] || 0;
-      let m = d.split(':')[1] || 0;
-      let res = new Date();
-      res.setHours(h);
-      res.setMinutes(m);
-      if (isSetSec)res.setSeconds(0);
-      return res;
-    },
-    addMinutes (date, min) {
-      return new Date(date.getTime() + min * 60000);
+      this.$emit('callback', this.time);
     }
   }
 }

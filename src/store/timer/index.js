@@ -1,5 +1,3 @@
-import { parseTime } from 'utils/utils.js'
-
 const state = {
   trainingTime: '',
   restTime: '',
@@ -8,7 +6,7 @@ const state = {
 
 const getters = {
   sumOfTime (state) {
-    return (parseTime(state.trainingTime) + parseTime(state.restTime)) * state.setCnt;
+    return (state.trainingTime + state.restTime) * state.setCnt;
   }
 }
 
