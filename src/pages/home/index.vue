@@ -47,7 +47,6 @@ export default {
 .home-cont {
   height: 100%;
   width: 100%;
-  background-color: #3CFFAF;
 }
 
 </style>
