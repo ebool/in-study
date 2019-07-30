@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 export default {
   mounted () {
     this.$refs['3'].classList.add('slide-in')
@@ -22,8 +23,12 @@ export default {
       this.$refs['1'].classList.add('slide-in')
     }, 2200);
     setTimeout(() => {
+      this.setTargetTime();
       this.$router.replace({ path: '/training' });
     }, 3000);
+  },
+  methods: {
+    ...mapActions('timer', ['setTargetTime'])
   }
 }
 </script>

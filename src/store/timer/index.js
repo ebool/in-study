@@ -1,12 +1,20 @@
+import Cookie from 'js-cookie';
+
 const state = {
-  trainingTime: '',
-  restTime: '',
-  setCnt: ''
+  // trainingTime: '',
+  // restTime: '',
+  // setCnt: ''
+  trainingTime: 50,
+  restTime: 10,
+  setCnt: 5
 }
 
 const getters = {
   sumOfTime (state) {
     return (state.trainingTime + state.restTime) * state.setCnt;
+  },
+  targetTime () {
+    return Cookie.get('targetTime');
   }
 }
 
@@ -16,7 +24,8 @@ const mutations = {
   setSetCnt (state, val) { state.setCnt = val }
 }
 const actions = {
-  someAction (/* context */) {
+  setTargetTime ({ getters }) {
+    Cookie.set('targetTime', +new Date() + getters.sumOfTime * 60000);
   }
 }
 export default {
