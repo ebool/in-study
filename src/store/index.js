@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import timer from './module-example'
+import timer from './timer'
 
 Vue.use(Vuex)
 

@@ -5,14 +5,14 @@
     <div class="q-mb-md">Time per rest</div>
     <input-time :unit="5" min="00:00" max="01:00" default="00:10" @callback="setRestTime"></input-time>
     <div class="q-mb-md">Set</div>
-    <input-number :unit="1" :min="1" :max="10" :default="5" @callback="setSetNumber"></input-number>
+    <input-number :unit="1" :min="1" :max="10" :default="5" @callback="setSetCnt"></input-number>
     <q-btn
       @click="goTo"
       class="q-mt-lg"
       rounded
       style="background: #7A74E8; color: white"
       size="xl"
-      :label="sumTime"></q-btn>
+      :label="sumOfTime"></q-btn>
   </div>
 </template>
 
@@ -30,19 +30,10 @@ export default {
     goTo () {
       this.$router.push({ path: '/waiting' });
     },
-    setTrainingTime (time) {
-      this.setTimePerSet(time);
-    },
-    setRestTime (time) {
-      this.setTimePerRest(time);
-    },
-    setSetNumber (number) {
-      this.setSetNumber(number);
-    },
-    ...mapMutations('timer', ['setTimePerSet', 'setTimePerRest', 'setSetNumber'])
+    ...mapMutations('timer', ['setTrainingTime', 'setRestTime', 'setSetCnt'])
   },
   computed: {
-    ...mapGetters('timer', ['sumTime'])
+    ...mapGetters('timer', ['sumOfTime'])
   },
   mounted () {
   }
