@@ -12,7 +12,7 @@
       rounded
       style="background: #7A74E8; color: white"
       size="xl"
-      :label="sumOfTime"></q-btn>
+      :label="sumOfTime | timeFormat"></q-btn>
   </div>
 </template>
 

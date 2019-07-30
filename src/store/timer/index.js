@@ -8,8 +8,7 @@ const state = {
 
 const getters = {
   sumOfTime (state) {
-    let time = (parseTime(state.trainingTime) + parseTime(state.restTime)) * state.setCnt;
-    return `총 ${Math.floor(time / 60)}시간 ${time % 60}분`;
+    return (parseTime(state.trainingTime) + parseTime(state.restTime)) * state.setCnt;
   }
 }
 
