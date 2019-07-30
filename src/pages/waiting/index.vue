@@ -22,7 +22,7 @@ export default {
       this.$refs['1'].classList.add('slide-in')
     }, 2200);
     setTimeout(() => {
-      this.$router.replace({ path: '/timer' });
+      this.$router.replace({ path: '/training' });
     }, 3000);
   }
 }

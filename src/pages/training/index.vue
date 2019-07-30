@@ -1,5 +1,5 @@
 <template>
-  <div class="timer-page-cont">
+  <div class="training-page-cont">
   </div>
 </template>
 

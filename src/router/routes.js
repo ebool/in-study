@@ -21,8 +21,8 @@ const routes = [
         component: () => import('pages/waiting/')
       },
       {
-        path: '/timer',
-        component: () => import('pages/timer/')
+        path: '/training',
+        component: () => import('pages/training/')
       }
     ]
   }
