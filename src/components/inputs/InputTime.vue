@@ -23,7 +23,7 @@ export default {
       default: '03:00',
       type: String
     },
-    default: {
+    initValue: {
       default: '00:00',
       type: String
     }
@@ -48,8 +48,8 @@ export default {
   },
   mounted () {
     this.time = new Date();
-    let h = this.default.split(':')[0] || 0;
-    let m = this.default.split(':')[1] || 0;
+    let h = this.initValue.split(':')[0] || 0;
+    let m = this.initValue.split(':')[1] || 0;
     this.time.setHours(h);
     this.time.setMinutes(m);
     this.emitData();
