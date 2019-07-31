@@ -1,6 +1,6 @@
 <template>
   <div class="training-page-cont column items-center">
-    <div class="time">{{nowTime}}</div>
+    <div class="time" :style="getStyle">{{nowTime}}</div>
     <div>{{currentSet}}</div>
     <br>
     <div>======</div>
@@ -14,6 +14,12 @@ import { mapGetters, mapActions } from 'vuex';
 
 export default {
   computed: {
+    getStyle () {
+      if (!this.currentState) return;
+      return {
+        color: this.currentState.type === 'rest' ? 'orange' : ''
+      }
+    },
     nowTime () {
       let mInterval = this.interval / 1000;
       let s = Math.floor(mInterval % 60);
@@ -26,7 +32,8 @@ export default {
   },
   data () {
     return {
-      interval: ''
+      interval: '',
+      currentState: ''
     }
   },
   methods: {
@@ -46,13 +53,13 @@ export default {
   mounted () {
     this.refreshTimer();
     let timer = this.startInterval(() => {
-      let currentState = this.getCurrent();
-      if (!currentState) {
+      this.currentState = this.getCurrent();
+      if (!this.currentState) {
         clearInterval(timer);
         this.interval = 0;
         return;
       }
-      this.interval = currentState.endTime - +new Date();
+      this.interval = this.currentState.endTime - +new Date();
     }, 1000);
   }
 }
