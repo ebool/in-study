@@ -1,6 +1,11 @@
 <template>
   <div class="training-page-cont column items-center">
     <div class="time">{{nowTime}}</div>
+    <div>{{currentSet}}</div>
+    <br>
+    <div>======</div>
+    <br>
+    <div>{{getTimetable}}</div>
   </div>
 </template>
 
@@ -17,7 +22,7 @@ export default {
       return `${this.add0(h)}:${this.add0(m)}:${this.add0(s)}`;
     },
     add0 () { return (v) => v > 9 ? v : '0' + v },
-    ...mapGetters('timer', ['targetTime'])
+    ...mapGetters('timer', ['targetTime', 'currentSet', 'getTimetable'])
   },
   data () {
     return {
@@ -44,3 +49,7 @@ export default {
   }
 }
 </style>
+
+// 1. 지금이 몇번째 세트인지 구하기
+// 2. 현재가 쉬는시간인지 공부시간인지 구하기
+// 3. 현재 수행한 퍼센트 구하기

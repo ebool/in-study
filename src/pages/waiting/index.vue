@@ -23,12 +23,12 @@ export default {
       this.$refs['1'].classList.add('slide-in')
     }, 2200);
     setTimeout(() => {
-      this.setTargetTime();
+      this.setTimer();
       this.$router.replace({ path: '/training' });
     }, 3000);
   },
   methods: {
-    ...mapActions('timer', ['setTargetTime'])
+    ...mapActions('timer', ['setTimer'])
   }
 }
 </script>
