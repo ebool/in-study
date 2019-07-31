@@ -22,22 +22,40 @@ export default {
       return `${this.add0(h)}:${this.add0(m)}:${this.add0(s)}`;
     },
     add0 () { return (v) => v > 9 ? v : '0' + v },
-    ...mapGetters('timer', ['targetTime', 'currentSet', 'getTimetable'])
+    ...mapGetters('timer', ['targetTime', 'currentSet', 'getTimer', 'getTimetable'])
   },
   data () {
     return {
       interval: ''
     }
   },
+  methods: {
+    startInterval (callback, sec) {
+      callback();
+      return setInterval(callback, sec);
+    },
+    getCurrent () {
+      let timer = this.getTimer;
+      if (!timer) return 0;
+
+      let now = +new Date();
+      for (let i of this.getTimetable) {
+        if (i.startTime < now && now < i.endTime) {
+          return i;
+        }
+      }
+    }
+  },
   mounted () {
-    this.interval = this.targetTime - +new Date();
-    let timer = setInterval(() => {
-      this.interval -= 1000;
-      if (this.interval <= 0) {
+    let timer = this.startInterval(() => {
+      let currentState = this.getCurrent();
+      if (!currentState) {
         clearInterval(timer);
         this.interval = 0;
+        return;
       }
-    }, 1000)
+      this.interval = currentState.endTime - +new Date();
+    }, 1000);
   }
 }
 </script>
