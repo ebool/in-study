@@ -1,9 +1,11 @@
 <template>
   <div class="home-cont column q-px-lg">
     <div class="q-mb-md">Time per set</div>
-    <input-time :unit="10" min="00:10" max="03:00" init-value="00:50" @callback="setTrainingTime"></input-time>
+    <input-time :unit="1" min="00:00" max="01:00" init-value="00:01" @callback="setRestTime"></input-time><!-- test -->
+    <!--<input-time :unit="10" min="00:10" max="03:00" init-value="00:50" @callback="setTrainingTime"></input-time>-->
     <div class="q-mb-md">Time per rest</div>
-    <input-time :unit="5" min="00:00" max="01:00" init-value="00:10" @callback="setRestTime"></input-time>
+    <input-number :unit="1" :min="1" :max="10" :default="5" @callback="setSetCnt"></input-number><!-- test -->
+    <!--<input-time :unit="5" min="00:00" max="01:00" init-value="00:10" @callback="setRestTime"></input-time>-->
     <div class="q-mb-md">Set</div>
     <input-number :unit="1" :min="1" :max="10" :default="5" @callback="setSetCnt"></input-number>
     <q-btn
