@@ -21,7 +21,7 @@
 <script>
 import InputTime from 'src/components/inputs/InputTime.vue'
 import InputNumber from 'src/components/inputs/InputNumber.vue'
-import { mapMutations, mapGetters } from 'vuex';
+import { mapMutations, mapGetters, mapActions } from 'vuex';
 
 export default {
   components: {
@@ -32,7 +32,8 @@ export default {
     goTo () {
       this.$router.push({ path: '/waiting' });
     },
-    ...mapMutations('timer', ['setTrainingTime', 'setRestTime', 'setSetCnt'])
+    ...mapMutations('timer', ['setTrainingTime', 'setRestTime', 'setSetCnt']),
+    ...mapActions('timer', ['removeTimer'])
   },
   computed: {
     getSumOfTime () {
@@ -41,6 +42,7 @@ export default {
     ...mapGetters('timer', ['sumOfTime'])
   },
   mounted () {
+    this.removeTimer();
   }
 }
 </script>

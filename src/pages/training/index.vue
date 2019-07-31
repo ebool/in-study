@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   computed: {
@@ -22,7 +22,7 @@ export default {
       return `${this.add0(h)}:${this.add0(m)}:${this.add0(s)}`;
     },
     add0 () { return (v) => v > 9 ? v : '0' + v },
-    ...mapGetters('timer', ['targetTime', 'currentSet', 'getTimer', 'getTimetable'])
+    ...mapGetters('timer', ['targetTime', 'currentSet', 'getTimetable'])
   },
   data () {
     return {
@@ -35,18 +35,16 @@ export default {
       return setInterval(callback, sec);
     },
     getCurrent () {
-      let timer = this.getTimer;
-      if (!timer) return 0;
-
+      if (!this.getTimetable) return;
       let now = +new Date();
       for (let i of this.getTimetable) {
-        if (i.startTime < now && now < i.endTime) {
-          return i;
-        }
+        if (i.startTime < now && now < i.endTime) return i;
       }
-    }
+    },
+    ...mapActions('timer', ['refreshTimer'])
   },
   mounted () {
+    this.refreshTimer();
     let timer = this.startInterval(() => {
       let currentState = this.getCurrent();
       if (!currentState) {
@@ -67,7 +65,3 @@ export default {
   }
 }
 </style>
-
-// 1. 지금이 몇번째 세트인지 구하기
-// 2. 현재가 쉬는시간인지 공부시간인지 구하기
-// 3. 현재 수행한 퍼센트 구하기

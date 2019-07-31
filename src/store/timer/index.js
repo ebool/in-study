@@ -3,25 +3,27 @@ import Cookie from 'js-cookie';
 const state = {
   // trainingTime: '',
   // restTime: '',
-  // setCnt: ''
+  // setCnt: '',
+  // timer: ''
   trainingTime: 50,
   restTime: 10,
-  setCnt: 5
+  setCnt: 5,
+  timer: ''
 }
 
 const getters = {
   sumOfTime (state) {
     return state.trainingTime * state.setCnt + state.restTime * (state.setCnt - 1);
   },
-  targetTime (state, getters) {
-    let timer = getters.getTimer;
+  targetTime (state) {
+    let timer = state.timer;
     return timer ? parseInt(timer.targetTime) : 0;
   },
   startTime (state, getters) {
     return getters.targetTime - getters.sumOfTime * 60000;
   },
   currentSet (state, getters) {
-    let timer = getters.getTimer;
+    let timer = state.timer;
     if (!timer) return 0;
 
     let now = +new Date();
@@ -32,9 +34,9 @@ const getters = {
       }
     }
   },
-  getTimetable (s, getters) {
-    let timer = getters.getTimer;
-    if (!timer) return 0;
+  getTimetable (state) {
+    let timer = state.timer;
+    if (!timer) return;
 
     let res = []
     let temp = timer.startTime;
@@ -55,20 +57,17 @@ const getters = {
       temp += timer.restTime * 60000;
     }
     return res;
-  },
-  getTimer () {
-    let timer = JSON.parse(Cookie.get('timer'));
-    return typeof timer === 'object' ? timer : ''
   }
 }
 
 const mutations = {
   setTrainingTime (state, val) { state.trainingTime = val },
   setRestTime (state, val) { state.restTime = val },
-  setSetCnt (state, val) { state.setCnt = val }
+  setSetCnt (state, val) { state.setCnt = val },
+  setTimer (state, val) { state.timer = val }
 }
 const actions = {
-  setTimer ({ state, getters }) {
+  setTimerCookie ({ state, getters }) {
     Cookie.set('timer', JSON.stringify({
       startTime: +new Date(),
       targetTime: +new Date() + getters.sumOfTime * 60000,
@@ -76,6 +75,13 @@ const actions = {
       restTime: state.restTime,
       setCnt: state.setCnt
     }));
+  },
+  removeTimer () {
+    Cookie.remove('timer');
+  },
+  refreshTimer ({ commit }) {
+    let timer = Cookie.get('timer');
+    commit('setTimer', timer ? JSON.parse(timer) : '');
   }
 }
 export default {
