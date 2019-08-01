@@ -14,6 +14,11 @@
     >
       {{ progress }}%
     </q-knob>
+    <transition-group name="fade">
+      <q-btn key="stop" class="q-mr-sm" round color="primary" icon="stop" @click="stop" v-if="isPause"/>
+      <q-btn key="run" round color="primary" icon="play_arrow" @click="run" v-if="isPause"/>
+      <q-btn key="pause" round color="primary" icon="pause" @click="pause" v-else/>
+    </transition-group>
   </div>
 </template>
 
@@ -43,10 +48,20 @@ export default {
     return {
       interval: '',
       currentState: '',
-      progress: 0
+      progress: 0,
+      isPause: false
     }
   },
   methods: {
+    stop () {
+      console.log('stop');
+    },
+    run () {
+      this.isPause = false;
+    },
+    pause () {
+      this.isPause = true;
+    },
     startInterval (callback, sec) {
       callback();
       return setInterval(callback, sec);
@@ -83,6 +98,26 @@ export default {
 .training-page-cont {
   .time {
     font-size: 80px;
+  }
+  .fade-enter, .fade-leave-to {
+    opacity: 0;
+  }
+
+  .fade-enter-to, .fade-leave {
+    opacity: 1;
+  }
+
+  .fade-enter-active {
+    transition: opacity .2s ease;
+  }
+
+  .fade-leave-active {
+    transition: opacity .2s ease;
+    position: absolute;
+  }
+
+  .fade-move {
+    transition: all .2s ease;
   }
 }
 </style>
