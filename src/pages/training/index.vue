@@ -1,7 +1,7 @@
 <template>
   <div class="training-page-cont column items-center">
     <div class="time" :style="getStyle">{{nowTime}}</div>
-    <div>{{currentState.set}}/{{setCnt}}</div>
+    <div>{{getCurrentSet}}/{{setCnt}}</div>
     <q-knob
       disable
       v-model="progress"
@@ -27,6 +27,9 @@ import { mapGetters, mapActions, mapState } from 'vuex';
 
 export default {
   computed: {
+    getCurrentSet () {
+      return this.currentState ? this.currentState.set : this.setCnt;
+    },
     getStyle () {
       if (!this.currentState) return;
       return {
