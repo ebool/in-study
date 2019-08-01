@@ -8,7 +8,8 @@ const state = {
   trainingTime: 50,
   restTime: 10,
   setCnt: 5,
-  timer: ''
+  timer: '',
+  pauseTime: 0
 }
 
 const getters = {
@@ -39,7 +40,7 @@ const getters = {
     if (!timer) return;
 
     let res = []
-    let temp = timer.startTime;
+    let temp = timer.startTime + state.pauseTime;
     for (let i = 1; i <= timer.setCnt; i++) {
       res.push({
         set: i,
@@ -65,7 +66,8 @@ const mutations = {
   setTrainingTime (state, val) { state.trainingTime = val },
   setRestTime (state, val) { state.restTime = val },
   setSetCnt (state, val) { state.setCnt = val },
-  setTimer (state, val) { state.timer = val }
+  setTimer (state, val) { state.timer = val },
+  setPauseTime (state, val) { state.pauseTime += val }
 }
 const actions = {
   setTimerCookie ({ state, getters }) {

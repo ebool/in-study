@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapState } from 'vuex';
+import { mapGetters, mapActions, mapState, mapMutations } from 'vuex';
 
 export default {
   computed: {
@@ -52,7 +52,9 @@ export default {
       interval: '',
       currentState: '',
       progress: 0,
-      isPause: false
+      isPause: false,
+      tickTimer: '',
+      pauseStartTime: 0
     }
   },
   methods: {
@@ -61,9 +63,13 @@ export default {
     },
     run () {
       this.isPause = false;
+      this.setPauseTime(+new Date() - this.pauseStartTime);
+      this.startTickTimer();
     },
     pause () {
       this.isPause = true;
+      clearInterval(this.tickTimer);
+      this.pauseStartTime = +new Date();
     },
     startInterval (callback, sec) {
       callback();
@@ -76,23 +82,27 @@ export default {
         if (i.startTime < now && now < i.endTime) return i;
       }
     },
+    startTickTimer () {
+      this.tickTimer = this.startInterval(() => {
+        let now = +new Date();
+
+        this.currentState = this.getCurrent();
+        if (!this.currentState) {
+          clearInterval(this.tickTimer);
+          this.interval = 0;
+          this.progress = 100;
+          return;
+        }
+        this.interval = this.currentState.endTime - now;
+        this.progress = Math.floor((now - this.startTime) / (this.sumOfTime * 600));
+      }, 1000);
+    },
+    ...mapMutations('timer', ['setPauseTime']),
     ...mapActions('timer', ['refreshTimer'])
   },
   mounted () {
     this.refreshTimer();
-    let intervalTimer = this.startInterval(() => {
-      let now = +new Date();
-
-      this.currentState = this.getCurrent();
-      if (!this.currentState) {
-        clearInterval(intervalTimer);
-        this.interval = 0;
-        this.progress = 100;
-        return;
-      }
-      this.interval = this.currentState.endTime - now;
-      this.progress = Math.floor((now - this.startTime) / (this.sumOfTime * 600));
-    }, 1000);
+    this.startTickTimer();
   }
 }
 </script>
