@@ -15,12 +15,12 @@ const getters = {
   sumOfTime (state) {
     return state.trainingTime * state.setCnt + state.restTime * (state.setCnt - 1);
   },
+  startTime (state) {
+    return state.timer.startTime;
+  },
   targetTime (state) {
     let timer = state.timer;
     return timer ? parseInt(timer.targetTime) : 0;
-  },
-  startTime (state, getters) {
-    return getters.targetTime - getters.sumOfTime * 60000;
   },
   currentSet (state, getters) {
     let timer = state.timer;
@@ -40,7 +40,7 @@ const getters = {
 
     let res = []
     let temp = timer.startTime;
-    for (let i = 1; i < timer.setCnt; i++) {
+    for (let i = 1; i <= timer.setCnt; i++) {
       res.push({
         set: i,
         startTime: temp,
@@ -48,6 +48,7 @@ const getters = {
         type: 'training'
       })
       temp += timer.trainingTime * 60000;
+      if (i === timer.setCnt) return res;
       res.push({
         set: i,
         startTime: temp,
@@ -80,8 +81,12 @@ const actions = {
     Cookie.remove('timer');
   },
   refreshTimer ({ commit }) {
-    let timer = Cookie.get('timer');
-    commit('setTimer', timer ? JSON.parse(timer) : '');
+    let timer = Cookie.get('timer') ? JSON.parse(Cookie.get('timer')) : '';
+    if (!timer) return;
+    commit('setTimer', timer);
+    commit('setTrainingTime', timer.trainingTime);
+    commit('setRestTime', timer.restTime);
+    commit('setSetCnt', timer.setCnt);
   }
 }
 export default {
