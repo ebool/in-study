@@ -1,7 +1,7 @@
 <template>
   <div class="training-page-cont column items-center">
     <div class="time" :style="getStyle">{{nowTime}}</div>
-    <div>{{currentSet}}</div>
+    <div>{{currentState.set}}/{{setCnt}}</div>
     <q-knob
       disable
       v-model="progress"
@@ -11,16 +11,14 @@
       color="primary"
       track-color="grey-3"
       class="text-primary q-ma-md"
-    >{{ progress }}%</q-knob>
-    <br>
-    <div>======</div>
-    <br>
-    <div>{{getTimetable}}</div>
+    >
+      {{ progress }}%
+    </q-knob>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions, mapState } from 'vuex';
 
 export default {
   computed: {
@@ -38,7 +36,8 @@ export default {
       return `${this.add0(h)}:${this.add0(m)}:${this.add0(s)}`;
     },
     add0 () { return (v) => v > 9 ? v : '0' + v },
-    ...mapGetters('timer', ['currentSet', 'getTimetable', 'sumOfTime', 'startTime'])
+    ...mapGetters('timer', ['currentSet', 'getTimetable', 'sumOfTime', 'startTime']),
+    ...mapState('timer', ['setCnt'])
   },
   data () {
     return {
