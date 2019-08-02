@@ -1,20 +1,20 @@
 <template>
   <div class="training-page-cont column items-center">
     <div class="time" :style="getStyle">{{nowTime}}</div>
-    <div>{{getCurrentSet}}/{{setCnt}}</div>
+    <div class="q-mt-lg">{{getCurrentSet}}/{{setCnt}}</div>
     <q-knob
       disable
       v-model="progress"
       show-value
-      size="90px"
+      size="220px"
       :thickness="0.22"
       color="primary"
       track-color="grey-3"
-      class="text-primary q-ma-md"
+      class="text-primary q-mt-md"
     >
       {{ progress }}%
     </q-knob>
-    <transition-group name="fade">
+    <transition-group class="q-mt-xl" name="fade">
       <q-btn key="stop" class="q-mr-sm" round color="primary" icon="stop" @click="stop" v-if="isPause"/>
       <q-btn key="run" round color="primary" icon="play_arrow" @click="run" v-if="isPause"/>
       <q-btn key="pause" round color="primary" icon="pause" @click="pause" v-else/>
