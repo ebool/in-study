@@ -16,12 +16,12 @@ export default {
       this.$refs['3'].classList.remove('slide-in')
       this.$refs['3'].classList.add('slide-out')
       this.$refs['2'].classList.add('slide-in')
-    }, 1200);
+    }, 1000);
     setTimeout(() => {
       this.$refs['2'].classList.remove('slide-in')
       this.$refs['2'].classList.add('slide-out')
       this.$refs['1'].classList.add('slide-in')
-    }, 2200);
+    }, 2000);
     setTimeout(() => {
       this.setTimerCookie();
       this.$router.replace({ path: '/training' });
