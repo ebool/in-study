@@ -59,7 +59,10 @@ export default {
   },
   methods: {
     stop () {
-      console.log('stop');
+      this.$router.replace('/home');
+    },
+    stopTimer () {
+      clearInterval(this.tickTimer);
     },
     run () {
       this.isPause = false;
@@ -68,7 +71,7 @@ export default {
     },
     pause () {
       this.isPause = true;
-      clearInterval(this.tickTimer);
+      this.stopTimer()
       this.pauseStartTime = +new Date();
     },
     startInterval (callback, sec) {
@@ -103,6 +106,9 @@ export default {
   mounted () {
     this.refreshTimer();
     this.startTickTimer();
+  },
+  beforeDestroy () {
+    this.stopTimer();
   }
 }
 </script>
