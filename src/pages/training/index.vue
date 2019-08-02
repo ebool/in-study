@@ -45,7 +45,7 @@ export default {
     },
     add0 () { return (v) => v > 9 ? v : '0' + v },
     ...mapGetters('timer', ['currentSet', 'getTimetable', 'sumOfTime', 'startTime']),
-    ...mapState('timer', ['setCnt'])
+    ...mapState('timer', ['setCnt', 'pauseTime'])
   },
   data () {
     return {
@@ -97,7 +97,7 @@ export default {
           return;
         }
         this.interval = this.currentState.endTime - now;
-        this.progress = Math.floor((now - this.startTime) / (this.sumOfTime * 600));
+        this.progress = Math.floor((now - this.startTime - this.pauseTime) / (this.sumOfTime * 600));
       }, 1000);
     },
     ...mapMutations('timer', ['setPauseTime']),
